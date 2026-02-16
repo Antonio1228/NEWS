@@ -1,0 +1,75 @@
+import csv
+from pathlib import Path
+
+DOCS = Path("docs")
+PAGES = DOCS / "p"
+DATA = Path("data/topics.csv")
+
+
+def main():
+    links = []
+
+    with DATA.open("r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            slug = row["slug"].strip()
+            query = row["query"].strip()
+
+            page = PAGES / f"{slug}.html"
+
+            if page.exists():
+                links.append(f'<li><a href="/p/{slug}.html">{query}</a></li>')
+
+    html = f"""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CS + Productivity Lab</title>
+
+<style>
+body {{
+  font-family: system-ui;
+  background: #0f172a;
+  color: #e5e7eb;
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+}}
+
+.card {{
+  background: #111827;
+  border: 1px solid #1f2937;
+  padding: 18px;
+  border-radius: 12px;
+  margin: 20px 0;
+}}
+
+a {{
+  color: #6366f1;
+}}
+</style>
+
+</head>
+<body>
+
+<h1>CS + Productivity Lab</h1>
+<p>Auto-generated student tech decision guides.</p>
+
+<div class="card">
+<h2>Latest Guides</h2>
+<ul>
+{chr(10).join(links) if links else "<li>No pages yet</li>"}
+</ul>
+</div>
+
+</body>
+</html>
+"""
+
+    (DOCS / "index.html").write_text(html, encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()
