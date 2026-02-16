@@ -25,6 +25,7 @@ def main():
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="google-site-verification" content="_N-mYnQhs9UxI7QA8W-E-KBsNGK2va8lO_MFuCn_V-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CS + Productivity Lab</title>
 
